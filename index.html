@@ -1,423 +1,84 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8" />
     <title>COVID-19 Misinfo Scrollytelling</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
-
-    <!-- MapLibre & Three.js CDN Assets -->
+    
     <link href="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css" rel="stylesheet" />
     <script src="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-    <!-- Google Fonts: Rubik Glitch -->
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <link href="https://fonts.googleapis.com/css2?family=Rubik+Glitch&family=Share+Tech&display=swap" rel="stylesheet">
-
-    <style>
-        /* Preserved Index styling tokens */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Share Tech', Arial, sans-serif;
-            color: #333;
-            background-color: #000;
-            /* Dark background to support the 3D canvas fade-ins */
-        }
-
-        /* Layered fullscreen backdrops */
-        #map,
-        #three-canvas {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            z-index: -1;
-            transition: opacity 1.2s ease-in-out;
-        }
-
-        #map {
-            opacity: 1;
-        }
-
-        #three-canvas {
-            opacity: 0;
-        }
-
-        #story {
-            padding-top: 40vh;
-            padding-bottom: 40vh;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Centered chapter boxes kept exactly as requested */
-        .chapter {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            margin: 0 auto 75vh auto;
-            width: 35%;
-            min-width: 300px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            transition: all 0.4s ease;
-            opacity: 0.3;
-        }
-
-        /* Wider layout specifically for Datawrapper embeds */
-        .chart-chapter {
-            width: 70%;
-            max-width: 800px;
-            background: rgba(255, 255, 255, 0.98);
-        }
-
-        .chapter.active {
-            opacity: 1;
-            border-left: 6px solid #dc3545;
-            transform: scale(1.02);
-        }
-
-        h2 {
-            margin-top: 0;
-            color: #111;
-            font-family: 'Share Tech', sans-serif;
-            font-size: 2.4rem;
-            line-height: 1.25;
-        }
-
-        p {
-            line-height: 1.6;
-            color: #555;
-        }
-
-        strong {
-            color: #dc3545;
-        }
-
-        /* Target only the header inside the intro/landing section */
-        #intro h2 {
-            font-family: 'Rubik Glitch', system-ui, sans-serif;
-            font-size: 2.5rem;
-            letter-spacing: 2px;
-        }
-
-        p {
-            line-height: 1.7;
-            color: #555;
-            font-size: 2rem;
-            /* Increase paragraph size */
-        }
-
-        .author {
-            display: block;
-            margin-top: 18px;
-            font-family: 'Share Tech', sans-serif;
-            font-size: 1.75rem;
-            letter-spacing: 1px;
-            font-weight: 400;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="css/style.css" />
 </head>
-
 <body>
 
-    <!-- Background Canvases -->
-    <div id="three-canvas"></div>
-    <div id="map"></div>
+<div id="three-canvas"></div>
+<div id="map"></div>
 
-    <div id="story">
-        <!-- ================= INDEX CHAPTERS ================= -->
-        <div id="intro" class="chapter active">
-            <h2>
-                What COVID-19 Misinformation Patterns Tell Us:
-                <br>
-                Countries, Sources, Narratives
-                <br>
-                <span class="author">By Navya Asopa</span>
-            </h2>
-            <p>Scroll down to track how rumors, conspiracies, and false reporting manifested across different global
-                hotspots during the pandemic.</p>
-        </div>
-
-        <div id="china" class="chapter">
-            <h2>About the Dataset:</h2>
-            <p>In 2020, some researchers at Princeton University analyzed over 5,600 misinformation stories of COVID-19
-                from around 80 countries in 35 languages. This data, collected between January and December 2020,
-                explains some patterns: What kind of misinformation spreads, where it spreads, and who amplifies it?</p>
-        </div>
-
-        <div id="us" class="chapter">
-            <h2>Affected Countries:</h2>
-            <p>While the pandemic was a shared global crisis, the misinformation it triggered was heterogeneous. China,
-                the United States, Turkey, and India reported the highest volume of misinformation.</p>
-        </div>
-
-        <div id="india" class="chapter">
-            <h2>Social Media as Carrier:</h2>
-            <p>Misinformation spread rapidly through social media, creating what the World Health Organization termed an
-                "infodemic”. The primary channels were Facebook, Twitter, and Whatsapp.</p>
-        </div>
-
-        <!-- ================= TEXT CHAPTERS ================= -->
-        <div id="virus" class="chapter">
-            <h2>Types of Misinformation:</h2>
-            <p>There was a tremendous amount of regional variation in the nature of misinformation, dominated by false
-                reporting, and then conspiracy theories.</p>
-        </div>
-
-        <div id="globe" class="chapter">
-            <h2>Individual as the Source:</h2>
-            <p>Approximately 80% of stories were spread by individual actors, while 17% originated from media outlets or
-                political figures.</p>
-        </div>
-
-        <div id="ending" class="chapter">
-            <h2>The Narrative:</h2>
-            <p>Misinformation travelled for a wide range of reasons- the biggest one being spread of fear, followed by
-                political motivations, and false hopes.</p>
-        </div>
-
-        <!-- ================= 4 DATAWRAPPER CHARTS ================= -->
-
-        <!-- Chart 1: Why Was It Spread? -->
-        <div id="chart-why" class="chapter chart-chapter">
-            <iframe title="Why COVID Misinformation Was Spread?" aria-label="Bar Chart" id="datawrapper-chart-ZSJad"
-                src="https://datawrapper.dwcdn.net/ZSJad/2/" scrolling="no" frameborder="0"
-                style="width:100%; border:none;" height="306" data-external="1"></iframe>
-        </div>
-
-        <!-- Chart 2: Motive by Type -->
-        <div id="chart-motive" class="chapter chart-chapter">
-            <iframe title="COVID Misinformation: Motive by Type" aria-label="Grouped column chart"
-                id="datawrapper-chart-C5YTd" src="https://datawrapper.dwcdn.net/C5YTd/1/" scrolling="no" frameborder="0"
-                style="width:100%; border:none;" height="447" data-external="1"></iframe>
-        </div>
-
-        <!-- Chart 3: Who Spreads Which Type -->
-        <div id="chart-spreaders" class="chapter chart-chapter">
-            <iframe title="Who Spreads Which Type of Misinformation?" aria-label="Stacked column chart"
-                id="datawrapper-chart-IH8QE" src="https://datawrapper.dwcdn.net/IH8QE/1/" scrolling="no" frameborder="0"
-                style="width:100%; border:none;" height="428" data-external="1"></iframe>
-        </div>
-
-        <!-- Chart 4: Type by Platform -->
-        <div id="chart-platform" class="chapter chart-chapter">
-            <iframe title="Misinformation Type by Platform" aria-label="Stacked column chart"
-                id="datawrapper-chart-6MAfC" src="https://datawrapper.dwcdn.net/6MAfC/1/" scrolling="no" frameborder="0"
-                style="width:100%; border:none;" height="428" data-external="1"></iframe>
-        </div>
-
+<div id="story">
+    <div id="intro" class="chapter active">
+        <h2>
+            What COVID-19 Misinformation Patterns Tell Us:
+            <br>
+            Countries, Sources, Narratives
+            <br>
+            <span class="author">By Navya Asopa</span>
+        </h2>
+        <p>Scroll down to track how rumors, conspiracies, and false reporting manifested across different global hotspots during the pandemic.</p>
+    </div>
+    
+    <div id="china" class="chapter">
+        <h2>About the Dataset:</h2>
+        <p>In 2020, some researchers at Princeton University analyzed over 5,600 misinformation stories of COVID-19 from around 80 countries in 35 languages. This data, collected between January and December 2020, explains some patterns: What kind of misinformation spreads, where it spreads, and who amplifies it?</p>
+    </div>
+    
+    <div id="us" class="chapter">
+        <h2>Affected Countries:</h2>
+        <p>While the pandemic was a shared global crisis, the misinformation it triggered was heterogeneous. China, the United States, Turkey, and India reported the highest volume of misinformation.</p>
+    </div>
+    
+    <div id="india" class="chapter">
+        <h2>Social Media as Carrier:</h2>
+        <p>Misinformation spread rapidly through social media, creating what the World Health Organization termed an "infodemic”. The primary channels were Facebook, Twitter, and Whatsapp.</p>
     </div>
 
-    <script>
-        /* ==========================================
-           1. EMBEDDED GEODATA
-           ========================================== */
-        var geojsonData = {
-            "type": "FeatureCollection",
-            "features": [
-                { "type": "Feature", "properties": { "country": "China", "cases": 449 }, "geometry": { "type": "Point", "coordinates": [104.1954, 35.8617] } },
-                { "type": "Feature", "properties": { "country": "United States", "cases": 441 }, "geometry": { "type": "Point", "coordinates": [-95.7129, 37.0902] } },
-                { "type": "Feature", "properties": { "country": "Turkey", "cases": 300 }, "geometry": { "type": "Point", "coordinates": [35.2433, 38.9637] } },
-                { "type": "Feature", "properties": { "country": "Spain", "cases": 254 }, "geometry": { "type": "Point", "coordinates": [-3.7492, 40.4637] } },
-                { "type": "Feature", "properties": { "country": "Germany", "cases": 229 }, "geometry": { "type": "Point", "coordinates": [10.4515, 51.1657] } },
-                { "type": "Feature", "properties": { "country": "Brazil", "cases": 210 }, "geometry": { "type": "Point", "coordinates": [-51.9253, -14.235] } },
-                { "type": "Feature", "properties": { "country": "India", "cases": 205 }, "geometry": { "type": "Point", "coordinates": [78.9629, 20.5937] } },
-                { "type": "Feature", "properties": { "country": "Egypt", "cases": 196 }, "geometry": { "type": "Point", "coordinates": [30.8025, 26.8206] } },
-                { "type": "Feature", "properties": { "country": "Italy", "cases": 149 }, "geometry": { "type": "Point", "coordinates": [12.5674, 41.8719] } }
-            ]
-        };
+    <div id="virus" class="chapter">
+        <h2>Types of Misinformation:</h2>
+        <p>There was a tremendous amount of regional variation in the nature of misinformation, dominated by false reporting, and then conspiracy theories.</p>
+    </div>
+    
+    <div id="globe" class="chapter">
+        <h2>Individual as the Source:</h2>
+        <p>Approximately 80% of stories were spread by individual actors, while 17% originated from media outlets or political figures.</p>
+    </div>
+    
+    <div id="ending" class="chapter">
+        <h2>The Narrative:</h2>
+        <p>Misinformation travelled for a wide range of reasons- the biggest one being spread of fear, followed by political motivations, and false hopes.</p>
+    </div>
 
-        /* ==========================================
-           2. THREE.JS ENGINE SETUP
-           ========================================== */
-        const threeContainer = document.getElementById('three-canvas');
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-        camera.position.z = 8;
+    <div id="chart-why" class="chapter chart-chapter">
+        <iframe title="Why COVID Misinformation Was Spread?" aria-label="Bar Chart" id="datawrapper-chart-ZSJad" src="https://datawrapper.dwcdn.net/ZSJad/2/" scrolling="no" frameborder="0" style="width:100%; border:none;" height="306" data-external="1"></iframe>
+    </div>
+    
+    <div id="chart-motive" class="chapter chart-chapter">
+        <iframe title="COVID Misinformation: Motive by Type" aria-label="Grouped column chart" id="datawrapper-chart-C5YTd" src="https://datawrapper.dwcdn.net/C5YTd/1/" scrolling="no" frameborder="0" style="width:100%; border:none;" height="447" data-external="1"></iframe>
+    </div>
 
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        threeContainer.appendChild(renderer.domElement);
+    <div id="chart-spreaders" class="chapter chart-chapter">
+        <iframe title="Who Spreads Which Type of Misinformation?" aria-label="Stacked column chart" id="datawrapper-chart-IH8QE" src="https://datawrapper.dwcdn.net/IH8QE/1/" scrolling="no" frameborder="0" style="width:100%; border:none;" height="428" data-external="1"></iframe>
+    </div>
 
-        scene.add(new THREE.AmbientLight(0xffffff, 0.4));
-        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        dirLight.position.set(5, 5, 5);
-        scene.add(dirLight);
+    <div id="chart-platform" class="chapter chart-chapter">
+        <iframe title="Misinformation Type by Platform" aria-label="Stacked column chart" id="datawrapper-chart-6MAfC" src="https://datawrapper.dwcdn.net/6MAfC/1/" scrolling="no" frameborder="0" style="width:100%; border:none;" height="428" data-external="1"></iframe>
+    </div>
+</div>
 
-        const virusGroup = new THREE.Group();
-        const coreGeo = new THREE.SphereGeometry(2, 32, 32);
-        const coreMat = new THREE.MeshStandardMaterial({ color: 0x990000, roughness: 0.8 });
-        const core = new THREE.Mesh(coreGeo, coreMat);
-        virusGroup.add(core);
-
-        const spikes = [];
-        const spikeMat = new THREE.MeshStandardMaterial({ color: 0xff3333 });
-        const spikeBody = new THREE.CylinderGeometry(0.04, 0.08, 0.5, 8);
-        spikeBody.translate(0, 0.25, 0);
-        const spikeHead = new THREE.SphereGeometry(0.12, 8, 8);
-        spikeHead.translate(0, 0.5, 0);
-
-        const singleSpike = new THREE.Group();
-        singleSpike.add(new THREE.Mesh(spikeBody, spikeMat));
-        singleSpike.add(new THREE.Mesh(spikeHead, spikeMat));
-
-        const numSpikes = 70;
-        for (let i = 0; i < numSpikes; i++) {
-            const spike = singleSpike.clone();
-            const phi = Math.acos(-1 + (2 * i) / numSpikes);
-            const theta = Math.sqrt(numSpikes * Math.PI) * phi;
-            spike.position.setFromSphericalCoords(2, phi, theta);
-            spike.lookAt(new THREE.Vector3(0, 0, 0));
-            spike.rotateX(Math.PI / 2);
-            spikes.push(spike);
-            virusGroup.add(spike);
-        }
-        scene.add(virusGroup);
-
-        /* ==========================================
-           3. MAPLIBRE ENGINE SETUP
-           ========================================== */
-        var map = new maplibregl.Map({
-            container: 'map',
-            style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
-            center: [0, 20],
-            zoom: 1.8,
-            pitch: 0,
-            interactive: false
-        });
-
-        map.on('load', function () {
-            map.addSource('covid-data', { type: 'geojson', data: geojsonData });
-            map.addLayer({
-                id: 'covid-plots',
-                type: 'circle',
-                source: 'covid-data',
-                paint: {
-                    'circle-radius': ['interpolate', ['linear'], ['get', 'cases'], 1, 5, 450, 28],
-                    'circle-color': ['interpolate', ['linear'], ['get', 'cases'], 1, '#ffc107', 150, '#fd7e14', 300, '#dc3545', 450, '#7a0010'],
-                    'circle-opacity': 0.8,
-                    'circle-stroke-width': 1.5,
-                    'circle-stroke-color': '#ffffff'
-                }
-            });
-        });
-
-        /* ==========================================
-           4. CONSOLIDATED ENGINE CHOREOGRAPHY
-           ========================================== */
-        var chapters = {
-            'intro': { visual: 'map', center: [0, 20], zoom: 1.8, pitch: 0, bearing: 0 },
-            'china': { visual: 'map', center: [104.1954, 35.8617], zoom: 4.2, pitch: 40, bearing: -10 },
-            'us': { visual: 'map', center: [-95.7129, 37.0902], zoom: 4.0, pitch: 30, bearing: 5 },
-            'india': { visual: 'map', center: [78.9629, 20.5937], zoom: 4.5, pitch: 45, bearing: 15 },
-            'virus': { visual: 'three' },
-            'globe': { visual: 'map', center: [0, 20], zoom: 1.8, pitch: 0, bearing: 0 },
-            'ending': { visual: 'three_transform' },
-
-            // Ensure all 4 charts use the 3D virus transform background
-            'chart-why': { visual: 'three_transform' },
-            'chart-motive': { visual: 'three_transform' },
-            'chart-spreaders': { visual: 'three_transform' },
-            'chart-platform': { visual: 'three_transform' }
-        };
-
-        let currentChapter = 'intro';
-
-        // Highly performant IntersectionObserver implementation replacing manual scroll bindings
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const chapterId = entry.target.id;
-                    const config = chapters[chapterId];
-                    if (!config) return;
-
-                    currentChapter = chapterId;
-
-                    document.querySelectorAll('.chapter').forEach(el => el.classList.remove('active'));
-                    entry.target.classList.add('active');
-
-                    const mapEl = document.getElementById('map');
-                    const threeEl = document.getElementById('three-canvas');
-
-                    if (config.visual === 'three') {
-                        mapEl.style.opacity = 0;
-                        threeEl.style.opacity = 1;
-                        spikes.forEach(s => s.scale.set(1, 1, 1));
-                        coreMat.color.setHex(0x990000);
-                    }
-                    else if (config.visual === 'map') {
-                        mapEl.style.opacity = 1;
-                        threeEl.style.opacity = 0;
-
-                        map.flyTo({
-                            center: config.center,
-                            zoom: config.zoom,
-                            pitch: config.pitch,
-                            bearing: config.bearing,
-                            duration: 2500,
-                            essential: true
-                        });
-                    }
-                    else if (config.visual === 'three_transform') {
-                        mapEl.style.opacity = 0;
-                        threeEl.style.opacity = 1;
-                        spikes.forEach(s => s.scale.set(1, 0.01, 1));
-                        coreMat.color.setHex(0x5a6268);
-                    }
-                }
-            });
-        }, { rootMargin: '-40% 0px -40% 0px' });
-
-        document.querySelectorAll('.chapter').forEach(chapter => observer.observe(chapter));
-
-        /* ==========================================
-           5. 3D RENDER LOOP & RESIZE MANAGEMENT
-           ========================================== */
-        function animate() {
-            requestAnimationFrame(animate);
-
-            virusGroup.rotation.y += 0.003;
-            virusGroup.rotation.x += 0.001;
-
-            // Trigger the mutation animation if the user is on the ending or any of the 4 chart sections
-            if (currentChapter === 'ending' ||
-                currentChapter === 'chart-why' ||
-                currentChapter === 'chart-motive' ||
-                currentChapter === 'chart-spreaders' ||
-                currentChapter === 'chart-platform') {
-
-                spikes.forEach(spike => {
-                    if (spike.scale.y < 1) {
-                        spike.scale.set(1, spike.scale.y + 0.015, 1);
-                    }
-                });
-                coreMat.color.lerp(new THREE.Color(0x990000), 0.01);
-            }
-
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        window.addEventListener('resize', () => {
-            if (camera && renderer) {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            }
-        });
-    </script>
-
-    <!-- Consolidated Datawrapper Script (Handles dynamic height for all 4 iframes) -->
-    <script type="text/javascript">
-        (function () { function e() { window.addEventListener("message", function (e) { if (e.data["datawrapper-height"] !== void 0) { var t = document.querySelectorAll("iframe"); for (var n in e.data["datawrapper-height"]) for (var r = 0, i; i = t[r]; r++)if (i.contentWindow === e.source) { var a = e.data["datawrapper-height"][n] + "px"; i.style.height = a } } }) } e() })();
-    </script>
-
+<script src="js/main.js"></script>
 </body>
-
 </html>
