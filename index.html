@@ -5,15 +5,20 @@
     <title>COVID-19 Misinfo Scrollytelling</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
     
+    <!-- Stable MapLibre CDN Links -->
     <link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet" />
     <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
+    
+    <!-- Three.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik+Glitch&family=Share+Tech&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="css/style.css" />
+    <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -31,54 +36,84 @@
         </h2>
         <p>Scroll down to track how rumors, conspiracies, and false reporting manifested across different global hotspots during the pandemic.</p>
     </div>
-    
-    <div id="china" class="chapter">
-        <h2>About the Dataset:</h2>
-        <p>In 2020, some researchers at Princeton University analyzed over 5,600 misinformation stories of COVID-19 from around 80 countries in 35 languages. This data, collected between January and December 2020, explains some patterns: What kind of misinformation spreads, where it spreads, and who amplifies it?</p>
+
+    <div id="infodemic" class="chapter">
+        <h2>The Infodemic</h2>
+        <p>COVID-19, the 21st-century global pandemic, spread against the backdrop of a hyper-globalized and digitized world, leading to a new crisis: rapidly transmitted misinformation. This bred an “infodemic” that spread as fast as the virus itself.</p>
     </div>
     
-    <div id="us" class="chapter">
+    <div id="dataset" class="chapter">
+        <h2>About the Dataset:</h2>
+        <p>In 2020, some researchers at Princeton University analyzed over 5,600 COVID-19 misinformation stories from around 80 countries in 35 languages. This data, collected between January and December 2020, reveals some patterns: what kind of misinformation spread, where it spread, and who amplified it.</p>
+    </div>
+    
+    <div id="affected" class="chapter">
         <h2>Affected Countries:</h2>
         <p>While the pandemic was a shared global crisis, the misinformation it triggered was heterogeneous. China, the United States, Turkey, and India reported the highest volume of misinformation.</p>
     </div>
-    
-    <div id="india" class="chapter">
-        <h2>Social Media as Carrier:</h2>
-        <p>Misinformation spread rapidly through social media, creating what the World Health Organization termed an "infodemic”. The primary channels were Facebook, Twitter, and Whatsapp.</p>
+
+    <div id="china-detail" class="chapter">
+        <h2>China (~536 cases)</h2>
+        <p>Misinformation in China revolved around the COVID-19 status of individuals instead of country-wide news on response, as the government frequently used its own fact-checking outlets.</p>
     </div>
 
-    <div id="virus" class="chapter">
-        <h2>Types of Misinformation:</h2>
-        <p>There was a tremendous amount of regional variation in the nature of misinformation, dominated by false reporting, and then conspiracy theories.</p>
-    </div>
-    
-    <div id="globe" class="chapter">
-        <h2>Individual as the Source:</h2>
-        <p>Approximately 80% of stories were spread by individual actors, while 17% originated from media outlets or political figures.</p>
-    </div>
-    
-    <div id="ending" class="chapter">
-        <h2>The Narrative:</h2>
-        <p>Misinformation travelled for a wide range of reasons- the biggest one being spread of fear, followed by political motivations, and false hopes.</p>
+    <div id="us-detail" class="chapter">
+        <h2>United States (~484 cases)</h2>
+        <p>Misinformation in the United States was concentrated on political polarization as media personalities often perpetuated false information and expressed anti-vaccination sentiments.</p>
     </div>
 
-    <div id="chart-why" class="chapter chart-chapter">
-        <iframe title="Why COVID Misinformation Was Spread?" aria-label="Bar Chart" id="datawrapper-chart-ZSJad" src="https://datawrapper.dwcdn.net/ZSJad/2/" scrolling="no" frameborder="0" style="width:100%; border:none;" height="306" data-external="1"></iframe>
+    <div id="india-detail" class="chapter">
+        <h2>India (~218 cases)</h2>
+        <p>Misinformation in India interestingly directed suspicion and hatred toward Indian Muslims as the group was blamed for bringing COVID-19 to India through travel to other Islamic countries. Many channels exacerbated this claim on national television, and social media users also floated false cures in abundance.</p>
+    </div>
+
+    <div id="types" class="chapter">
+        <h2>Types of Misinformation</h2>
+        <p>While there was tremendous regional variation in the nature of misinformation, some driving forces topped the charts worldwide.</p>
     </div>
     
     <div id="chart-motive" class="chapter chart-chapter">
         <iframe title="COVID Misinformation: Motive by Type" aria-label="Grouped column chart" id="datawrapper-chart-C5YTd" src="https://datawrapper.dwcdn.net/C5YTd/1/" scrolling="no" frameborder="0" style="width:100%; border:none;" height="447" data-external="1"></iframe>
+        <p style="font-size: 1.4rem; line-height: 1.5; margin-top: 20px; color: #555;">This breaks down what the lies were about and why they were spread. The majority of the cases centered around fake reporting, conspiracy theories, and fake remedies for the virus.</p>
     </div>
 
-    <div id="chart-spreaders" class="chapter chart-chapter">
-        <iframe title="Who Spreads Which Type of Misinformation?" aria-label="Stacked column chart" id="datawrapper-chart-IH8QE" src="https://datawrapper.dwcdn.net/IH8QE/1/" scrolling="no" frameborder="0" style="width:100%; border:none;" height="428" data-external="1"></iframe>
+    <div id="social" class="chapter">
+        <h2>Social Media as Carrier</h2>
+        <p>Misinformation spread rapidly through social media, creating what the World Health Organization termed an "infodemic”. The primary channels for this became the apps we use day-to-day.</p>
     </div>
 
     <div id="chart-platform" class="chapter chart-chapter">
         <iframe title="Misinformation Type by Platform" aria-label="Stacked column chart" id="datawrapper-chart-6MAfC" src="https://datawrapper.dwcdn.net/6MAfC/1/" scrolling="no" frameborder="0" style="width:100%; border:none;" height="428" data-external="1"></iframe>
+        <p style="font-size: 1.4rem; line-height: 1.5; margin-top: 20px; color: #555;">This maps out the social media channels through which false narratives circulated most frequently. Facebook, Twitter, and WhatsApp ranked globally.</p>
+    </div>
+    
+    <div id="individual" class="chapter">
+        <h2>Individual As the Source</h2>
+        <p>Contrary to mainstream belief, news agencies did not dominate the chart of misinformation spreaders. This proved that the infodemic was, to a considerable extent, a grassroots, peer-to-peer phenomenon.</p>
+    </div>
+
+    <div id="chart-spreaders" class="chapter chart-chapter">
+        <iframe title="Who Spreads Which Type of Misinformation?" aria-label="Stacked column chart" id="datawrapper-chart-IH8QE" src="https://datawrapper.dwcdn.net/IH8QE/1/" scrolling="no" frameborder="0" style="width:100%; border:none;" height="428" data-external="1"></iframe>
+        <p style="font-size: 1.4rem; line-height: 1.5; margin-top: 20px; color: #555;">This categorizes the primary sources that generated or amplified false coronavirus narratives. Roughly 80% of stories were spread by individual actors, while 17% originated from media outlets or political figures.</p>
+    </div>
+    
+    <div id="narrative" class="chapter">
+        <h2>The Narrative</h2>
+        <p>Misinformation traveled for a wide range of reasons as uncertainty peaked in the early months of the global health emergency.</p>
+    </div>
+
+    <div id="chart-why" class="chapter chart-chapter">
+        <iframe title="Why COVID Misinformation Was Spread?" aria-label="Bar Chart" id="datawrapper-chart-ZSJad" src="https://datawrapper.dwcdn.net/ZSJad/2/" scrolling="no" frameborder="0" style="width:100%; border:none;" height="306" data-external="1"></iframe>
+        <p style="font-size: 1.4rem; line-height: 1.5; margin-top: 20px; color: #555;">The motivation behind the spread of misinformation was split between Fear (panic-induced sharing) and Politics (strategic manipulation to undermine opponents and/or state bodies), with some driven by Profit.</p>
+    </div>
+
+    <div id="way-out" class="chapter">
+        <h2>Is There a Way Out?</h2>
+        <p>The onus of combating such viral misinformation online fell to independent fact-checking networks. These local communities flagged misinformation and debunked it on digital communication channels. The next big step is: how can policymakers and civil society leverage this treasure in a global context?</p>
     </div>
 </div>
 
-<script src="js/main.js"></script>
+<!-- Link to your JavaScript file -->
+<script src="main.js"></script>
 </body>
 </html>
