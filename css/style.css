@@ -3,45 +3,53 @@ body {
     padding: 0; 
     font-family: 'Share Tech', Arial, sans-serif; 
     color: #333; 
-    background-color: #000; 
+    /* Creates a perfectly split background: White on the left 50%, Black on the right 50% */
+    background: linear-gradient(to right, #ffffff 50%, #000000 50%); 
 }
 
+/* Visuals restricted to the right half of the screen */
 #map, #three-canvas { 
     position: fixed; 
     top: 0; 
     bottom: 0; 
-    left: 0;
-    width: 100%; 
+    left: 50%; 
+    width: 50%; 
     height: 100vh;
-    z-index: -1; 
+    z-index: 0; 
     transition: opacity 1.2s ease-in-out;
 }
 
 #map { opacity: 1; }
 #three-canvas { opacity: 0; }
 
+/* Story restricted to the left half */
 #story { 
     padding-top: 40vh; 
     padding-bottom: 40vh; 
     position: relative;
     z-index: 1;
+    width: 50%; 
+    pointer-events: none; /* Allows clicking through empty space */
 }
 
+/* Cards centered within the left half */
 .chapter { 
     background: rgba(255, 255, 255, 0.95); 
     padding: 30px; 
     margin: 0 auto 75vh auto; 
-    width: 35%; 
+    width: 75%; 
     min-width: 300px;
     border-radius: 12px; 
     box-shadow: 0 4px 20px rgba(0,0,0,0.15);
     transition: all 0.4s ease;
     opacity: 0.3;
+    pointer-events: auto; /* Restores clickability on the cards */
 }
 
+/* Gives charts more breathing room on the left */
 .chart-chapter {
-    width: 70%;
-    max-width: 800px;
+    width: 90%;
+    max-width: none;
     background: rgba(255, 255, 255, 0.98);
 }
 
@@ -84,6 +92,21 @@ p {
 
 /* ================= MOBILE OPTIMIZATION ================= */
 @media (max-width: 768px) {
+    body {
+        /* Reverts to full black on mobile so the 3D space looks right behind the scrolling text cards */
+        background: #000000; 
+    }
+    
+    /* Stack layout: visuals take full screen, text scrolls over them */
+    #map, #three-canvas {
+        left: 0;
+        width: 100%;
+    }
+    
+    #story {
+        width: 100%;
+    }
+
     .chapter, .chart-chapter {
         width: 85%;
         padding: 20px;
