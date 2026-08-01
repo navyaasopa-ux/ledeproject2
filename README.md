@@ -27,7 +27,8 @@
 ## Platform Specialization:
 * Open social networks (Twitter, Facebook) acted as highways for broad political conspiracies and fake news, whereas closed messaging platforms (WhatsApp) carried highly localized, peer-to-peer false cures and unverified remedies.
 
-## Local Context Rules Global Rumors: Contrary to expectations of uniform global rumors, misinformation heavily adapted to pre-existing local political tensions, religious divisions, and cultural contexts.
+## Local Context Rules Global Rumors:
+*Contrary to expectations of uniform global rumors, misinformation heavily adapted to pre-existing local political tensions, religious divisions, and cultural contexts.
 * United States: High political polarization, anti-vaccination rhetoric, and unproven cures.
 * India / South Asia: Religious scapegoating and promotion of unverified traditional remedies.
 * Turkey: Fake cures and government response rumors.
